@@ -1,4 +1,10 @@
+const gallery = require("./gallery.json");
+const { Gallery } = require("./gallery");
 
 export function App() {
-    return <h1>Hello world!</h1>;
+    return (
+        <Gallery
+            items={gallery}
+            />
+    );
 }
