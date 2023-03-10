@@ -1,46 +1,35 @@
-# Frontend example with Parcel, React and Less
+# photo-gallery-layout-tdd
 
-This is the simplest possible example of a frontend built with JavaScript and React and bundled with Parcel (v2).
+Example of creating a photo gallery layout algorithm using test driven development (TDD).
 
-If you like this project, please star this repo and [support my work](https://www.codecapers.com.au/about#support-my-work)
+This code accompanies chapter 5 of the book [Rapid Fullstack Development](https://rapidfullstackdevelopment.com/).
+
+Follow the author on [Twitter](https://twitter.com/codecapers) for updates.
+
+## Pre-reqs
+
+You need [Node.js](https://nodejs.org/) installed to run this code.
 
 ## Setup
 
-You need [Node.js](https://nodejs.org/en/) installed to use this code.
-
-Uses pnpm because it's faster than npm.
-
-First install pnpm:
+Clone this repo, change into the directory and install dependencies:
 
 ```bash
-npm install -g pnpm
+npm install
 ```
 
-Then clone this repo then install dependenices:
+## Run the automated tests
 
 ```bash
-pnpm install
+npm test
 ```
 
-## Serve the web page with live reload
+## Run the visual test
+
+Run the dev server like this:
 
 ```bash
 npm start
 ```
 
-Open a browser and navigate to [http://localhost:1234/](http://localhost:1234/).
-
-## Build the static web page
-
-```bash
-npm run build
-```
-
-The static web page is output to the `dist` subdirectory.
-
-You can test it using `live-server`:
-
-```bash
-cd dist
-npx live-server
-```
+Then click the link or point your browser at the default location for Parcel: [http://localhost:1234](http://localhost:1234).
