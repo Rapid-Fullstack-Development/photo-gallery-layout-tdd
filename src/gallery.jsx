@@ -29,6 +29,9 @@ export function Gallery({ items }) {
                                 <img
                                     key={item.thumb}
                                     src={item.thumb} 
+                                    style={{
+                                        border: "solid red 1px",
+                                    }}
                                     />
                             );
                         })}
