@@ -60,4 +60,41 @@ describe("layout", () => {
         expect(row.items[2].width).toBe(item3.width);
         expect(row.items[2].height).toBe(item3.height);
     });
+    
+    test("items wrap to next line on overflow", () => {
+
+        const targetRowHeight = 110;
+        const items = [ 
+            {
+                width: 200,
+                height: 100,
+            },
+            {
+                width: 300,
+                height: 140,
+            },
+            {
+                width: 180,
+                height: 30,
+            },
+        ];
+        
+        const rows = createLayout(items, targetRowHeight, 600);
+
+        expect(rows.length).toBe(2);
+        
+        const firstRow = rows[0];
+        expect(firstRow.height).toBe(targetRowHeight);
+        expect(firstRow.items.length).toBe(2);
+        expect(firstRow.items[0].width).toBe(items[0].width);
+        expect(firstRow.items[0].height).toBe(items[0].height);
+        expect(firstRow.items[1].width).toBe(items[1].width);
+        expect(firstRow.items[1].height).toBe(items[1].height);
+        
+        const secondRow = rows[1];
+        expect(secondRow.height).toBe(targetRowHeight);
+        expect(secondRow.items.length).toBe(1);
+        expect(secondRow.items[0].width).toBe(items[2].width);
+        expect(secondRow.items[0].height).toBe(items[2].height);
+    });    
 });
