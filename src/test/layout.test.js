@@ -81,6 +81,47 @@ describe("layout", () => {
                 height: 110,
             },
         ];
+
+        const rows = createLayout(items, targetRowHeight, galleryWidth);
+
+        expect(rows.length).toBe(2); // Expect items to be allocated across two rows.
+        
+        const firstRow = rows[0];
+        expect(firstRow.height).toBe(targetRowHeight);
+        expect(firstRow.items.length).toBe(2);
+        expect(firstRow.items[0].width).toBe(items[0].width);
+        expect(firstRow.items[0].height).toBe(items[0].height);
+        expect(firstRow.items[1].width).toBe(items[1].width);
+        expect(firstRow.items[1].height).toBe(items[1].height);
+        
+        const secondRow = rows[1];
+        expect(secondRow.height).toBe(targetRowHeight);
+        expect(secondRow.items.length).toBe(1);
+        expect(secondRow.items[0].width).toBe(items[2].width);
+        expect(secondRow.items[0].height).toBe(items[2].height);
+    });
+       
+    test("scaled items wrap to next line on overflow", () => {
+
+        const targetRowHeight = 110;
+        const galleryWidth = 600;
+        const items = [ 
+            {
+                width: 100,
+                height: 40,
+            },
+            {
+                width: 110,
+                height: 60,
+            },
+
+            // The third item overflows the width of the gallery, but only when the
+            // image is rescaled to fit the target row width.
+            {
+                width: 80,
+                height: 30,
+            },
+        ];
         
         const rows = createLayout(items, targetRowHeight, galleryWidth);
         expect(rows.length).toBe(2); // Expect items to be allocated across two rows.
@@ -98,5 +139,5 @@ describe("layout", () => {
         expect(secondRow.items.length).toBe(1);
         expect(secondRow.items[0].width).toBe(items[2].width);
         expect(secondRow.items[0].height).toBe(items[2].height);
-    });    
+    });
 });

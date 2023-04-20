@@ -14,7 +14,7 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
     //
     let curRow = {
         items: [],
-        height: targetRowHeight,
+                height: targetRowHeight,
     };
     rows.push(curRow);
 
@@ -22,24 +22,29 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
 
     for (const item of items) {
 
-        // 
-        // Wraps to the next row on overflow.
-        //
-        if (curRowWidth + item.width > maxGalleryWidth) {
-            //
-            // Starts a new row.
-            //
-            curRow = {
-                items: [],
-                height: targetRowHeight,
-            };
-            rows.push(curRow);
+        const aspectRatio = item.width / item.height;
+        const computedWidth = targetRowHeight * aspectRatio;
 
-            curRowWidth = 0; // Resets the current row width.
+        if (curRow.items.length > 0) {
+	        // 
+	        // Wraps to the next row on overflow.
+	        //
+            if (curRowWidth + computedWidth > maxGalleryWidth) {
+                //
+                // Start a new row.
+                //
+                curRow = {
+                    items: [],
+                    height: targetRowHeight,
+                };
+                rows.push(curRow);
+
+                curRowWidth = 0;
+            }
         }
 
         curRow.items.push(item);
-        curRowWidth += item.width;
+        curRowWidth += computedWidth;
     }
 
     return rows;
