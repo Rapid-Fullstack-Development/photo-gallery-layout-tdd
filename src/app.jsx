@@ -1,4 +1,4 @@
-// const gallery = require("./gallery.json");
+const gallery = require("./gallery.json");
 const { Gallery } = require("./gallery");
 
 //
@@ -34,7 +34,7 @@ const { Gallery } = require("./gallery");
 //
 // NOTE: I've adjusted these values by hand to overflow the boundary.
 //
-// const gallery = [
+// const gallery = [ 
 //     {
 //         thumb: "https://via.placeholder.com/200x100",
 //         width: 200,
@@ -55,13 +55,13 @@ const { Gallery } = require("./gallery");
 //
 // Single item larger than gallery.
 //
-const gallery = [
-    {
-        thumb: "https://via.placeholder.com/1200x500",
-        width: 1200,
-        height: 500,
-    },
-];
+// const gallery = [
+//     {
+//         thumb: "https://via.placeholder.com/1200x500",
+//         width: 1200,
+//         height: 500,
+//     },
+// ];
 
 export function App() {
     return (
