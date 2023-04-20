@@ -81,26 +81,26 @@ describe("layout", () => {
                 height: 110,
             },
         ];
-
+        
         const rows = createLayout(items, targetRowHeight, galleryWidth);
 
         expect(rows.length).toBe(2); // Expect items to be allocated across two rows.
         
         const firstRow = rows[0];
-        expect(firstRow.height).toBe(targetRowHeight);
+        expect(firstRow.height).toBeGreaterThan(targetRowHeight);
         expect(firstRow.items.length).toBe(2);
-        expect(firstRow.items[0].width).toBe(items[0].width);
-        expect(firstRow.items[0].height).toBe(items[0].height);
-        expect(firstRow.items[1].width).toBe(items[1].width);
-        expect(firstRow.items[1].height).toBe(items[1].height);
+        expect(firstRow.items[0].width).toBeGreaterThan(items[0].width);
+        expect(firstRow.items[0].height).toBeGreaterThan(items[0].height);
+        expect(firstRow.items[1].width).toBeGreaterThan(items[1].width);
+        expect(firstRow.items[1].height).toBeGreaterThan(items[1].height);
         
         const secondRow = rows[1];
         expect(secondRow.height).toBe(targetRowHeight);
         expect(secondRow.items.length).toBe(1);
         expect(secondRow.items[0].width).toBe(items[2].width);
         expect(secondRow.items[0].height).toBe(items[2].height);
-    });
-       
+    });    
+    
     test("scaled items wrap to next line on overflow", () => {
 
         const targetRowHeight = 110;
@@ -127,17 +127,70 @@ describe("layout", () => {
         expect(rows.length).toBe(2); // Expect items to be allocated across two rows.
         
         const firstRow = rows[0];
-        expect(firstRow.height).toBe(targetRowHeight);
+        expect(firstRow.height).toBeGreaterThan(targetRowHeight);
         expect(firstRow.items.length).toBe(2);
-        expect(firstRow.items[0].width).toBe(items[0].width);
-        expect(firstRow.items[0].height).toBe(items[0].height);
-        expect(firstRow.items[1].width).toBe(items[1].width);
-        expect(firstRow.items[1].height).toBe(items[1].height);
+        expect(firstRow.items[0].width).toBeGreaterThan(items[0].width);
+        expect(firstRow.items[0].height).toBeGreaterThan(items[0].height);
+        expect(firstRow.items[1].width).toBeGreaterThan(items[1].width);
+        expect(firstRow.items[1].height).toBeGreaterThan(items[1].height);
         
         const secondRow = rows[1];
         expect(secondRow.height).toBe(targetRowHeight);
         expect(secondRow.items.length).toBe(1);
         expect(secondRow.items[0].width).toBe(items[2].width);
         expect(secondRow.items[0].height).toBe(items[2].height);
-    });
+    });    
+    
+    test("items that are not on the last row should stretch toward the boundary", () => {
+
+        const targetRowHeight = 110;
+        const items = [ 
+            {
+                width: 200,
+                height: 100,
+            },
+            {
+                width: 300,
+                height: 140,
+            },
+            {
+                width: 180,
+                height: 30,
+            },
+        ];
+        
+        const rows = createLayout(items, targetRowHeight, 670);
+
+        expect(rows.length).toBe(2);
+        
+        //
+        // The first row is stretched out toward the boundary.
+        //
+        const firstRow = rows[0];
+        expect(firstRow.items.length).toBe(2);
+
+        for (let i = 0; i < 2; ++i) {
+            expect(firstRow.items[i].width).toBeGreaterThan(items[i].width);
+            expect(firstRow.items[i].height).toBeGreaterThan(items[i].height);
+        }
+
+        //
+        // The height of the first row should be larger than the target.
+        //
+        expect(firstRow.height).toBeGreaterThan(targetRowHeight);
+
+        //
+        // The second row is not stretched.
+        //        
+        const secondRow = rows[1];
+        expect(secondRow.items.length).toBe(1);
+        expect(secondRow.items[0].width).toBe(items[2].width);
+        expect(secondRow.items[0].height).toBe(items[2].height);
+
+        // 
+        // The height of the second row is the target.
+        //
+        expect(secondRow.height).toBe(targetRowHeight);
+
+    });        
 });

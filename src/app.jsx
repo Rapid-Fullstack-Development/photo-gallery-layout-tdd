@@ -36,18 +36,18 @@ const { Gallery } = require("./gallery");
 //
 const gallery = [
     {
-        thumb: "https://via.placeholder.com/100x40",
-        width: 100,
-        height: 40,
+        thumb: "https://via.placeholder.com/200x100",
+        width: 200,
+        height: 100,
     },
     {
-        thumb: "https://via.placeholder.com/110x60",
-        width: 110,
-        height: 60,
+        thumb: "https://via.placeholder.com/300x140",
+        width: 300,
+        height: 140,
     },
     {
-        thumb: "https://via.placeholder.com/80x30",
-        width: 80,
+        thumb: "https://via.placeholder.com/180x80",
+        width: 180,
         height: 30,
     },
 ];
