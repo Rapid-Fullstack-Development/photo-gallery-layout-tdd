@@ -74,12 +74,7 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
     for (let rowIndex = 0; rowIndex < rows.length-1; rowIndex++) {
         const row = rows[rowIndex];
         
-        let rowWidth = 0;
-        for (const item of row.items) { //TODO: For performance do this in the loop above and record it for the row.
-            rowWidth += item.width;
-        }
-
-        const gap = maxGalleryWidth - rowWidth;
+        const gap = maxGalleryWidth - row.width;
         const deltaWidth = gap / row.items.length;
 
         let maxThumbHeight = 0;
