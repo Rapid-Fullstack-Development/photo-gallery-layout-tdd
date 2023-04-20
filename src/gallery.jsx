@@ -1,11 +1,10 @@
 import { createLayout } from "./layout";
 
-export function Gallery({ items }) {
+export function Gallery({ items, targetRowHeight }) {
 
-    const targetHeight = 200;
     const galleryWidth = 600;
 
-    const rows = createLayout(items, targetHeight, galleryWidth);
+    const rows = createLayout(items, targetRowHeight, galleryWidth);
 
     return (
         <div 
