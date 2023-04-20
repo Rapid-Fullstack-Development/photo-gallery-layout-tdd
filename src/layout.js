@@ -54,6 +54,7 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
         const clone = Object.assign({}, item, {
             width: computedWidth,
             height: targetRowHeight,
+            aspectRatio: aspectRatio,
         }); 
 
         //
@@ -85,12 +86,6 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
         //
         for (const item of row.items) {
             //
-            // NOTE: This is already computed in the previous loop.
-            //       Should reuse that value for performance.
-            //
-            const aspectRatio = item.width / item.height; 
-
-            //
             // Increase the width of the item.
             //
             // NOTE: At this point we are modifiying our inputs so we could clone the object in the loop above.
@@ -101,7 +96,7 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
             // 
             // Compute a new height based off the adjusted width and the original aspect ratio.
             //
-            item.height = item.width * (1.0 / aspectRatio);
+            item.height = item.width * (1.0 / item.aspectRatio);
 
             //
             // Track the minimum height of this row.
