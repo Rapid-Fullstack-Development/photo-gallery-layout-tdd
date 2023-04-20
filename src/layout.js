@@ -31,6 +31,11 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
             //
             if (curRowWidth + computedWidth > maxGalleryWidth) {
                 //
+                // Set the width of the previous row.
+                //
+                curRow.width = curRowWidth;
+
+                //
                 // Start a new row.
                 //
                 curRow = {
@@ -46,7 +51,10 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
         //
         // Clone the item so we can adjust it to fit the width of the gallery.
         //
-        const clone = Object.assign({}, item); 
+        const clone = Object.assign({}, item, {
+            width: computedWidth,
+            height: targetRowHeight,
+        }); 
 
         //
         // Add the item to the row.
@@ -54,6 +62,11 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
         curRow.items.push(clone);
         curRowWidth += computedWidth;
     }
+
+    //
+    // Set the width of the final row.
+    //
+    curRow.width = curRowWidth;
 
     //
     // For all rows, except the last row, stretch the items towards the boundary to fill the gap.
@@ -69,7 +82,8 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
         const gap = maxGalleryWidth - rowWidth;
         const deltaWidth = gap / row.items.length;
 
-        let minThumbHeight = Number.MAX_VALUE;
+        let maxThumbHeight = 0;
+        let newWidth = 0;
 
         //
         // Expand each item to fill the space.
@@ -87,19 +101,21 @@ export function createLayout(items, targetRowHeight, maxGalleryWidth) {
             // NOTE: At this point we are modifiying our inputs so we could clone the object in the loop above.
             //
             item.width += deltaWidth; 
+            newWidth += item.width;
 
             // 
-            // Compute a new height based off the adjsuted width and the original aspect ratio.
+            // Compute a new height based off the adjusted width and the original aspect ratio.
             //
             item.height = item.width * (1.0 / aspectRatio);
 
             //
             // Track the minimum height of this row.
             //
-            minThumbHeight = Math.min(minThumbHeight, item.height);
+            maxThumbHeight = Math.max(maxThumbHeight, item.height);
         }
 
-        row.height = minThumbHeight;
+        row.height = maxThumbHeight;
+        row.width = newWidth;
     }
 
     return rows;
